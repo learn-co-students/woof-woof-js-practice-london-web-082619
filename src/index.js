@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const dogBar = document.getElementById('dog-bar');
     const dogInfo = document.getElementById('dog-info');
     const dogFilter = document.getElementById('good-dog-filter');
-    dogFilter.addEventListener('click', switchDogFilter);
+    dogFilter.addEventListener('click', (e) => switchDogFilter(e, dogBar));
 
     makeDogTab();
 
@@ -44,12 +44,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     function changeStatus(e, dog){
         e.preventDefault();
+        const dogFilter = document.getElementById('good-dog-filter');
+        const dogBar = document.getElementById('dog-bar');
         patchDog(dog)
             .then(json => {
                 const tab = document.querySelector(`[data-id=\"${dog.id}\"]`);
                 tab.dataset.isGoodDog = json.isGoodDog;
                 dog.isGoodDog = json.isGoodDog;
-                switchStatus(e, dog.isGoodDog);    
+                switchStatus(e, dog.isGoodDog);
+                if (checkFilterOn(dogFilter.innerText)){filterDogs(dogBar)}
             })
     }
 
@@ -87,25 +90,26 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
 
 
-    function switchDogFilter(){
-        if (this.innerText == 'Filter good dogs: ON'){
-            this.innerText = 'Filter good dogs: OFF';
+    function switchDogFilter(e, dogBar){
+        if (checkFilterOn(e.target.innerText)){
+            e.target.innerText = 'Filter good dogs: OFF';
             [...dogBar.children].forEach(span => span.className = "")
         }else{
-            this.innerText = 'Filter good dogs: ON';
-            filterDogs();
+            e.target.innerText = 'Filter good dogs: ON';
+            filterDogs(dogBar);
         }
     }
 
-    function findBadDogs(){ 
+    function checkFilterOn(text){
+        return (text == 'Filter good dogs: ON');
+    }
+
+    function findBadDogs(dogBar){ 
         return [...dogBar.children].filter(dog => dog.dataset.isGoodDog == "false");
     }
 
-    function filterDogs(){
-        const array = findBadDogs();
-
+    function filterDogs(dogBar){
+        const array = findBadDogs(dogBar);
         array.forEach(span => span.className = "hidden")
-
-        console.log("dogs have been filtered");
     }
 })
