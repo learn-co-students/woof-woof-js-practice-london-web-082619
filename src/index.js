@@ -1,20 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => displayPupsInBar())
 
-// API
-
-function patch(pupId, dataChange){
-    return fetch(baseURL+`${pupId}`, {
-        method: "PATCH",
-        headers: headers,
-        body: JSON.stringify({
-            isGoodDog: dataChange
-        })
-    })
-    .then(resp => resp.json())
-}
-// how to call a patch function from the API file??
-
-
 
 // CONSTANTS
 

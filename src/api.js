@@ -24,11 +24,8 @@ function patch(pupId, dataChange){
     .then(resp => resp.json())
 }
 
+
 const API = {
     get: get(),
-    // patch: patch()
+    patch: patch
 }
-
-
-// two ways for the patch input:
-    // just reverse; look what there is and put opposite (can be done within fetch?)
