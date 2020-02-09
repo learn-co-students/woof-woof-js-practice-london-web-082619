@@ -24,7 +24,7 @@
 
 #dog-bar span {
   height: 80%;
-  width: 8vw;
+  width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,4 +50,17 @@
 
 body {
   margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.naughty {
+  background-color: red;
+}
+
+.good {
+  background-color: green;
+}
+
+.hidden {
+  display: none;
 }
